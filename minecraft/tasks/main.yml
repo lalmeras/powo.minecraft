@@ -1,0 +1,13 @@
+---
+
+- name: needed variables
+  fail:
+    msg: "variable {{ item }} is needed"
+  when: item in vars
+  with_items:
+    - url
+    - reset
+    - target
+    - symlink
+
+- import_tasks: minecraft.yml

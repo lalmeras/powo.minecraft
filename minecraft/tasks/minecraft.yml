@@ -1,0 +1,13 @@
+---
+
+- name: check install
+  stat:
+    path: "{{ _target }}/{{ _minecraft_jar }}"
+  register: minecraft_jar
+
+- name: installation
+  include_tasks: install.yml
+  when: not minecraft_jar.stat.exists or reset
+
+- name: launcher
+  import_tasks: launcher.yml

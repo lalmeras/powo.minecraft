@@ -1,0 +1,57 @@
+---
+
+- name: create launcher
+  copy:
+    dest: "{{ _target }}/{{ _minecraft_launcher }}"
+    mode: ugo+rx
+    content: |
+      #! /bin/bash
+      # This launcher is automatically created by powo.minecraft
+      # Do not edit
+
+      # include launcher_include
+      {{ _launcher_include }}
+
+      if [ -z "$BASH_SOURCE[0]" ]; then
+        echo "Error determining script folder"
+        exit 1
+      fi
+      this_file=$( readlink -f "${BASH_SOURCE[0]}" )
+      this_folder=$( dirname "${this_file}" )
+      exec java -jar "${this_folder}/{{ _minecraft_jar }}"
+
+- name: symlink
+  file:
+    path: "{{ _symlink }}"
+    src: "{{ _target }}/{{ _minecraft_launcher }}"
+    state: link
+  when: (_symlink | default('')).strip()
+
+- name: check icon
+  stat:
+    path: "{{ _target }}/{{ _minecraft_icon }}"
+
+- name: icon
+  shell:
+    unzip
+    {{ _target | expanduser | quote }}/{{ _minecraft_jar | quote }}
+    {{ _minecraft_icon | quote }}
+  args:
+    chdir: "{{ _target }}"
+    creates: "{{ _target }}/{{ _minecraft_icon }}"
+
+- name: desktop file folder
+  file:
+    path: "{{ _desktop_file | dirname }}"
+    state: directory
+
+- name: desktop file
+  copy:
+    dest: "{{ _desktop_file }}"
+    content: |
+      [Desktop Entry]
+      Name=Minecraft
+      Exec={{ _target | quote }}/{{ _minecraft_launcher | quote }}
+      Type=Application
+      Icon={{ _target }}/{{ _minecraft_icon }}
+      Categories=Game

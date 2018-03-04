@@ -1,0 +1,11 @@
+---
+
+- name: usage
+  debug:
+    msg: |
+      url: download url (default {{ default_url }})
+           example: http://server.domain/file.jar
+      reset: erase and reinstall (default {{ default_reset }})
+      target: install target folder (default {{ default_target }})
+      symlink: launcher symlink name, left empty not to create a symlink
+               (defaut {{ default_symlink }})

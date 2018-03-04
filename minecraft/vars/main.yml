@@ -1,0 +1,22 @@
+---
+
+_url: "{{ url | default(default_url) }}"
+_reset: "{{ reset | default(default_reset) }}"
+_target: "{{ target | default(default_target) | expanduser }}"
+_symlink: "{{ url | default(default_symlink) | expanduser }}"
+
+default_url: http://s3.amazonaws.com/Minecraft.Download/launcher/Minecraft.jar
+default_reset: false
+default_target: ~/Applications/Minecraft
+default_symlink: ~/.local/bin/{{ _minecraft_launcher }}
+
+_desktop_file: ~/.local/share/applications/minecraft.desktop
+_minecraft_jar: Minecraft.jar
+_minecraft_launcher: minecraft
+_minecraft_icon: favicon.png
+_launcher_include: |
+  {% if launcher_include[0] == '@' %}
+  {{ lookup('file', launcher_include[1:]) }}
+  {% else %}
+  {{ launcher_include }}
+  {% endif %}

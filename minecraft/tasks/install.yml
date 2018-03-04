@@ -1,0 +1,12 @@
+---
+
+- name: prepare target folder
+  file:
+    name: "{{ _target }}"
+    state: directory
+    mode: u=rwX
+
+- name: download
+  get_url:
+    url: "{{ _url }}"
+    dest: "{{ _target }}/{{ _minecraft_jar }}"
