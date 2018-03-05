@@ -1,6 +1,6 @@
 ---
 
-- name: prepare target folder
+- name: prepare folder
   file:
     name: "{{ _target }}"
     state: directory

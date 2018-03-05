@@ -1,0 +1,6 @@
+---
+
+- name: reset
+  file:
+    path: "{{ _target }}"
+    state: absent

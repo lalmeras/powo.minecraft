@@ -1,2 +1,10 @@
+args:
+  reset:
+    type: bool
+    is_var: true
+    arg_name: reset
+    default: false
+    required: false
+    help: erase before installation
 tasks:
   - minecraft
