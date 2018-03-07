@@ -1,0 +1,8 @@
+---
+
+- name: reset
+  import_tasks: reset.yml
+  when: _reset
+
+- name: installation & launcher
+  import_tasks: craften-launcher.yml

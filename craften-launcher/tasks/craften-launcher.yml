@@ -1,0 +1,18 @@
+---
+
+- name: check install
+  stat:
+    path: "{{ _target }}/{{ _craften_launcher_jar }}"
+  register: __craften_launcher_jar
+
+- name: installation
+  import_tasks: install.yml
+  when: not __craften_launcher_jar.stat.exists or reset
+
+- name: launcher
+  import_tasks: launcher.yml
+
+- name: cleaning
+  file:
+    path: "{{ _target }}/{{ _craften_launcher_archive }}"
+    state: absent

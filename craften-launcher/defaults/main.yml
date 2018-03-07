@@ -1,0 +1,10 @@
+---
+
+launcher_include: |
+  #
+  # To customize craften-launcher launcher, use launcher_include var:
+  #
+  # - @file: source the provided file in launcher script
+  # - content: content is added as-is in script
+  #
+

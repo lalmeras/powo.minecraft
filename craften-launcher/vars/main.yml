@@ -1,0 +1,24 @@
+---
+
+_url: "{{ url | default(default_url) }}"
+_reset: "{{ reset | default(default_reset) }}"
+_target: "{{ target | default(default_target) | expanduser }}"
+_symlink: "{{ url | default(default_symlink) | expanduser }}"
+
+default_version: 1.3.2
+default_url: https://ci.wertarbyte.com/job/CraftenLauncher/de.craften.craftenlauncher$CraftenLauncher/3/artifact/de.craften.craftenlauncher/CraftenLauncher/{{ default_version }}/CraftenLauncher-{{ default_version }}-bin.zip
+default_reset: false
+default_target: ~/Applications/craften-launcher
+default_symlink: ~/.local/bin/{{ _craften_launcher_launcher }}
+
+_desktop_file: ~/.local/share/applications/craften-launcher.desktop
+_craften_launcher_archive: "{{ _url | basename }}"
+_craften_launcher_jar: "CraftenLauncher-{{ default_version }}.jar"
+_craften_launcher_launcher: craften-launcher
+_craften_launcher_icon: images/icon.png
+_launcher_include: |
+  {% if launcher_include[0] == '@' %}
+  {{ lookup('file', launcher_include[1:]) }}
+  {% else %}
+  {{ launcher_include }}
+  {% endif %}
